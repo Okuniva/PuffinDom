@@ -10,6 +10,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.UI", "PuffinDom.UI\PuffinDom.UI.csproj", "{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{E61F6933-FF22-4FE9-ABBF-27B6B5BDE40C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ECB27A05-A851-4F4B-B8C6-11EFFCBAEBC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.UnitTests", "PuffinDom.UnitTests\PuffinDom.UnitTests.csproj", "{F1EE76F3-62BC-4807-9C34-9854E0EF2724}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +43,15 @@ Global
 		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1EE76F3-62BC-4807-9C34-9854E0EF2724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1EE76F3-62BC-4807-9C34-9854E0EF2724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1EE76F3-62BC-4807-9C34-9854E0EF2724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1EE76F3-62BC-4807-9C34-9854E0EF2724}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9A33E686-8923-4EE9-96A0-18ED2FF4A437} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
 		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
 		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
+		{F1EE76F3-62BC-4807-9C34-9854E0EF2724} = {ECB27A05-A851-4F4B-B8C6-11EFFCBAEBC3}
 	EndGlobalSection
 EndGlobal
