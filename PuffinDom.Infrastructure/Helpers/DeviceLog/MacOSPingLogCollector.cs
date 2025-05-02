@@ -16,7 +16,7 @@ internal class MacOSPingLogCollector : LogCollector
     {
         ExternalProgramRunner.Run(
             "ping",
-            $"8.8.8.8 --apple-time -i {PuffinConstants.ProxiesPingDelay.Seconds.CastTo<int>()}",
+            $"8.8.8.8 --apple-time -i {CoreConstants.ProxiesPingDelay.Seconds.CastTo<int>()}",
             LogQueueAdd,
             collectOutput: false,
             message: "Mac os ping 8.8.8.8",

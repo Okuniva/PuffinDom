@@ -29,7 +29,7 @@ public partial class DeviceManager
                     {
                         default:
                         case Platform.Android:
-                            bundleId = Adb.GetOpenedAppBundleId(PuffinEnvironmentVariables.DroidEmulatorId);
+                            bundleId = Adb.GetOpenedAppBundleId(CoreEnvironmentVariables.DroidEmulatorId);
                             break;
                         case Platform.iOS:
                             // TODO find out how to receive
@@ -62,7 +62,7 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             return this;
 
-        var pingUrls = PuffinConstants.PingUrls;
+        var pingUrls = CoreConstants.PingUrls;
         pingUrls.AddRange(proxyList);
 
         foreach (var url in pingUrls)
@@ -85,7 +85,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.SetShowTouches(PuffinEnvironmentVariables.DroidEmulatorId, true);
+                Adb.SetShowTouches(CoreEnvironmentVariables.DroidEmulatorId, true);
                 break;
             case Platform.iOS:
                 break;
@@ -102,7 +102,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.SetDebugApp(PuffinEnvironmentVariables.DroidEmulatorId, bundleId);
+                Adb.SetDebugApp(CoreEnvironmentVariables.DroidEmulatorId, bundleId);
                 break;
             case Platform.iOS:
                 break;
@@ -148,8 +148,8 @@ public partial class DeviceManager
             default:
             case Platform.Android:
                 WaitCondition(
-                    () => AndroidOpenedAppBundleId is PuffinConstants.AndroidBrowserBundleId or PuffinConstants.AndroidChromiumBrowserBundleId
-                        or PuffinConstants.Android21BrowserBundleId,
+                    () => AndroidOpenedAppBundleId is CoreConstants.AndroidBrowserBundleId or CoreConstants.AndroidChromiumBrowserBundleId
+                        or CoreConstants.Android21BrowserBundleId,
                     "Browser is opened",
                     true);
 
@@ -165,7 +165,7 @@ public partial class DeviceManager
     
     public DeviceManager SendKey(AndroidKeyCodes keycodePaste, bool waitAfter = true)
     {
-        Adb.SendKey(PuffinEnvironmentVariables.DroidEmulatorId, keycodePaste, waitAfter);
+        Adb.SendKey(CoreEnvironmentVariables.DroidEmulatorId, keycodePaste, waitAfter);
         InvalidateCachedPageSource();
 
         return this;
@@ -176,7 +176,7 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             throw new NotSupportedException();
 
-        return Adb.DumpSysMemInfoPlain(PuffinEnvironmentVariables.DroidEmulatorId, bundleId, false);
+        return Adb.DumpSysMemInfoPlain(CoreEnvironmentVariables.DroidEmulatorId, bundleId, false);
     }
 
     public DeviceManager ChangeUIThemeTo(AppTheme appTheme)
@@ -205,7 +205,7 @@ public partial class DeviceManager
     
     public DroidMemInfo? DumpSysMemInfo(string bundleId)
     {
-        var result = Adb.DumpSysMemInfoPlain(PuffinEnvironmentVariables.DroidEmulatorId, bundleId, false);
+        var result = Adb.DumpSysMemInfoPlain(CoreEnvironmentVariables.DroidEmulatorId, bundleId, false);
         result = result.Substring(result.IndexOf("App Summary", StringComparison.Ordinal));
 
         var totalPssMatch = Regex.Match(result, @"(TOTAL PSS:.*\d )|(TOTAL:.*\d )");
@@ -237,7 +237,7 @@ public partial class DeviceManager
     
     public DeviceManager SetOemUnlock()
     {
-        Adb.SetOemUnlock(PuffinEnvironmentVariables.DroidEmulatorId);
+        Adb.SetOemUnlock(CoreEnvironmentVariables.DroidEmulatorId);
 
         return this;
     }
@@ -248,7 +248,7 @@ public partial class DeviceManager
             { "1M", "2M", "3M", "4M", "5M", "6M", "7M", "8M", "9M", "10M", "11M", "12M", "13M", "14M", "15M", "16M", "17M", "18M", "19M", "20M" };
 
         foreach (var memorySize in increasingSizesArray)
-            Adb.SetLogBufferSize(PuffinEnvironmentVariables.DroidEmulatorId, memorySize);
+            Adb.SetLogBufferSize(CoreEnvironmentVariables.DroidEmulatorId, memorySize);
 
         return this;
     }
@@ -256,7 +256,7 @@ public partial class DeviceManager
     
     public DeviceManager SetScreenAutoBrightness(bool turnOn)
     {
-        Adb.SetScreenAutoBrightness(PuffinEnvironmentVariables.DroidEmulatorId, turnOn);
+        Adb.SetScreenAutoBrightness(CoreEnvironmentVariables.DroidEmulatorId, turnOn);
         return this;
     }
 
@@ -264,7 +264,7 @@ public partial class DeviceManager
     {
         return Platform switch
         {
-            Platform.Android => Adb.IsDeviceStableConnectedToInternet(PuffinEnvironmentVariables.DroidEmulatorId),
+            Platform.Android => Adb.IsDeviceStableConnectedToInternet(CoreEnvironmentVariables.DroidEmulatorId),
             Platform.iOS => true,
             _ => throw new PlatformNotSupportedException(),
         };
@@ -274,7 +274,7 @@ public partial class DeviceManager
     public DeviceManager SetKeepActivities()
     {
         if (Platform == Platform.Android)
-            Adb.SetKeepActivities(PuffinEnvironmentVariables.DroidEmulatorId);
+            Adb.SetKeepActivities(CoreEnvironmentVariables.DroidEmulatorId);
 
         return this;
     }
@@ -299,7 +299,7 @@ public partial class DeviceManager
                 if (Adb.GetDevices().Count == 0)
                 {
                     Log.Write("No devices found. Booting emulator");
-                    EmulatorManager.BootEmulator(DroidEmulatorConfigurationHelper.Emulators[PuffinEnvironmentVariables.Device].Item1);
+                    EmulatorManager.BootEmulator(DroidEmulatorConfigurationHelper.Emulators[CoreEnvironmentVariables.Device].Item1);
                 }
                 else
                     Log.Write("Emulator is already booted");
@@ -322,7 +322,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.DisableAnimations(PuffinEnvironmentVariables.DroidEmulatorId);
+                Adb.DisableAnimations(CoreEnvironmentVariables.DroidEmulatorId);
                 break;
             case Platform.iOS:
                 break;
@@ -337,7 +337,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.ClearAppData(PuffinEnvironmentVariables.DroidEmulatorId, bundleId);
+                Adb.ClearAppData(CoreEnvironmentVariables.DroidEmulatorId, bundleId);
                 ThreadSleep.For(200.Milliseconds(), "Waiting app data cleared");
                 break;
             case Platform.iOS:
@@ -355,7 +355,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.SwitchDeveloperMode(PuffinEnvironmentVariables.DroidEmulatorId);
+                Adb.SwitchDeveloperMode(CoreEnvironmentVariables.DroidEmulatorId);
                 break;
             case Platform.iOS:
                 break;
@@ -372,7 +372,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.TurnOffAllInternet(PuffinEnvironmentVariables.DroidEmulatorId);
+                Adb.TurnOffAllInternet(CoreEnvironmentVariables.DroidEmulatorId);
                 break;
             case Platform.iOS:
                 break;
@@ -389,7 +389,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                Adb.TurnOnAllInternet(PuffinEnvironmentVariables.DroidEmulatorId);
+                Adb.TurnOnAllInternet(CoreEnvironmentVariables.DroidEmulatorId);
                 break;
             case Platform.iOS:
                 break;
@@ -425,7 +425,7 @@ public partial class DeviceManager
             }
         }
 
-        ThreadSleep.For(PuffinConstants.DefaultDelayAfterAnyAction, "Delay after dismissing keyboard");
+        ThreadSleep.For(CoreConstants.DefaultDelayAfterAnyAction, "Delay after dismissing keyboard");
 
         WaitCondition(
             () => !IsKeyboardVisible,
@@ -440,7 +440,7 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             return this;
 
-        Adb.DisableSpellChecker(PuffinEnvironmentVariables.DroidEmulatorId);
+        Adb.DisableSpellChecker(CoreEnvironmentVariables.DroidEmulatorId);
 
         return this;
     }
@@ -450,7 +450,7 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             return this;
 
-        Adb.SetOnScreenKeyboardShouldBeShown(PuffinEnvironmentVariables.DroidEmulatorId);
+        Adb.SetOnScreenKeyboardShouldBeShown(CoreEnvironmentVariables.DroidEmulatorId);
 
         return this;
     }
@@ -460,7 +460,7 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             return this;
 
-        Adb.SetScreenTimeoutOffToMaximum(PuffinEnvironmentVariables.DroidEmulatorId);
+        Adb.SetScreenTimeoutOffToMaximum(CoreEnvironmentVariables.DroidEmulatorId);
 
         return this;
     }
@@ -470,9 +470,9 @@ public partial class DeviceManager
         if (Platform == Platform.iOS)
             return this;
 
-        Adb.SetHiddenApiPolicyPrePApps(PuffinEnvironmentVariables.DroidEmulatorId, 1);
-        Adb.SetHiddenApiPolicyPApps(PuffinEnvironmentVariables.DroidEmulatorId, 1);
-        Adb.SetHiddenApiPolicy(PuffinEnvironmentVariables.DroidEmulatorId, 1);
+        Adb.SetHiddenApiPolicyPrePApps(CoreEnvironmentVariables.DroidEmulatorId, 1);
+        Adb.SetHiddenApiPolicyPApps(CoreEnvironmentVariables.DroidEmulatorId, 1);
+        Adb.SetHiddenApiPolicy(CoreEnvironmentVariables.DroidEmulatorId, 1);
 
         return this;
     }
@@ -483,7 +483,7 @@ public partial class DeviceManager
             return this;
 
         Adb.RunCommand(
-            PuffinEnvironmentVariables.DroidEmulatorId,
+            CoreEnvironmentVariables.DroidEmulatorId,
             $"date -s @{DateTimeOffset.Now.ToUnixTimeMilliseconds() / 1000}");
 
         return this;

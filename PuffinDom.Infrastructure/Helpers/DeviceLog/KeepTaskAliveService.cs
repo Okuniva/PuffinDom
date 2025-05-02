@@ -46,11 +46,11 @@ internal class KeepTaskAliveService
                         Log.Write(
                             e,
                             $"Failed to run {taskName} " +
-                            $"Restarting it in {PuffinConstants.TaskRerunDelay}",
+                            $"Restarting it in {CoreConstants.TaskRerunDelay}",
                             false);
 
                         ThreadSleep.For(
-                            PuffinConstants.TaskRerunDelay,
+                            CoreConstants.TaskRerunDelay,
                             $"Wait some time before starting {taskName} once again");
                     }
             },

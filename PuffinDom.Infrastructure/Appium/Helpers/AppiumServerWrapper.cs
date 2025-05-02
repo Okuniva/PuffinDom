@@ -44,9 +44,9 @@ public class AppiumServerWrapper : IAppiumServerWrapper
 
                 var serverService = new AppiumServiceBuilder()
                     .WithArguments(arguments)
-                    .UsingPort(PuffinConstants.AppiumPort)
-                    .WithStartUpTimeOut(PuffinConstants.AppiumServerStartUpTimeOut)
-                    .WithLogFile(new FileInfo(PuffinConstants.AppiumLogFileName))
+                    .UsingPort(CoreConstants.AppiumPort)
+                    .WithStartUpTimeOut(CoreConstants.AppiumServerStartUpTimeOut)
+                    .WithLogFile(new FileInfo(CoreConstants.AppiumLogFileName))
                     .Build();
 
                 serverService.OutputDataReceived += (_, e) => Log.Write($"Appium {e.Data}");
@@ -58,15 +58,15 @@ public class AppiumServerWrapper : IAppiumServerWrapper
                 while (!_server.IsRunning)
                 {
                     var elapsed = DateTime.Now.Subtract(start).Ticks;
-                    if (elapsed >= PuffinConstants.AppiumServerMaxWaitTime.Ticks)
+                    if (elapsed >= CoreConstants.AppiumServerMaxWaitTime.Ticks)
                     {
-                        Log.Write($">>>>> {elapsed} ticks elapsed, timeout value is {PuffinConstants.AppiumServerMaxWaitTime.Ticks}");
+                        Log.Write($">>>>> {elapsed} ticks elapsed, timeout value is {CoreConstants.AppiumServerMaxWaitTime.Ticks}");
 
                         throw new TimeoutException(
-                            $"Timed out waiting for Appium server to start after waiting for {PuffinConstants.AppiumServerMaxWaitTime.Seconds}s");
+                            $"Timed out waiting for Appium server to start after waiting for {CoreConstants.AppiumServerMaxWaitTime.Seconds}s");
                     }
 
-                    Task.Delay(PuffinConstants.AppiumServerStartedChecksDelayBetweenRetries).Wait();
+                    Task.Delay(CoreConstants.AppiumServerStartedChecksDelayBetweenRetries).Wait();
                 }
 
                 Log.Write("Appium server started");
@@ -84,7 +84,7 @@ public class AppiumServerWrapper : IAppiumServerWrapper
                     }
 
                     ThreadSleep.For(
-                        PuffinConstants.AppiumServerStartRetriesDelay,
+                        CoreConstants.AppiumServerStartRetriesDelay,
                         "Retrying to start Appium server");
 
                     maxTries--;

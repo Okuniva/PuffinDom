@@ -59,7 +59,7 @@ public static class ViewExtensions
             2);
 
         ThreadSleep.For(
-            PuffinConstants.DefaultDelayAfterAnyAction,
+            CoreConstants.DefaultDelayAfterAnyAction,
             "Delay after double tap");
 
         return view;
@@ -262,7 +262,7 @@ public static class ViewExtensions
                     duration: duration);
 
                 ThreadSleep.For(
-                    PuffinConstants.DelayAfterScrollDuration,
+                    CoreConstants.DelayAfterScrollDuration,
                     "Delay after scrolling up");
 
                 break;
@@ -289,7 +289,7 @@ public static class ViewExtensions
                     duration: duration);
 
                 ThreadSleep.For(
-                    PuffinConstants.DelayAfterScrollDuration,
+                    CoreConstants.DelayAfterScrollDuration,
                     "Delay after scrolling down");
 
                 break;
@@ -312,7 +312,7 @@ public static class ViewExtensions
                     duration: duration);
 
                 ThreadSleep.For(
-                    PuffinConstants.DelayAfterSwipeDuration,
+                    CoreConstants.DelayAfterSwipeDuration,
                     "Delay after swiping left");
 
                 break;
@@ -334,7 +334,7 @@ public static class ViewExtensions
                     duration: duration);
 
                 ThreadSleep.For(
-                    PuffinConstants.DelayAfterSwipeDuration,
+                    CoreConstants.DelayAfterSwipeDuration,
                     "Delay after swiping right");
 
                 break;
@@ -350,7 +350,7 @@ public static class ViewExtensions
     {
         distanceToDrag ??= (int)(rect.Height / 1.4);
 
-        if (distanceToDrag.Value >= PuffinConstants.MinimumDpToScrollUpOrDown.ConvertFromDpToPx())
+        if (distanceToDrag.Value >= CoreConstants.MinimumDpToScrollUpOrDown.ConvertFromDpToPx())
             return distanceToDrag.Value;
 
         Log.Write(
@@ -358,7 +358,7 @@ public static class ViewExtensions
                 ? $"WARNING! Distance to drag is negative! {distanceToDrag.Value} px. Setting distance to default"
                 : $"WARNING! Too small distance is dragging {distanceToDrag.Value} px. Setting distance to default");
 
-        distanceToDrag = PuffinConstants.MinimumDpToScrollUpOrDown.ConvertFromDpToPx();
+        distanceToDrag = CoreConstants.MinimumDpToScrollUpOrDown.ConvertFromDpToPx();
 
         return distanceToDrag.Value;
     }
@@ -398,7 +398,7 @@ public static class ViewExtensions
 
         UIContext.Device.TouchAndHoldRect(view.Rect);
 
-        ThreadSleep.For(PuffinConstants.DefaultDelayAfterAnyAction, "Delay after TapAndHold action");
+        ThreadSleep.For(CoreConstants.DefaultDelayAfterAnyAction, "Delay after TapAndHold action");
 
         if (!checkScreenClosed)
             return view;
@@ -424,7 +424,7 @@ public static class ViewExtensions
         UIContext.Device.DragCoordinates(x, y, centerX, y);
 
         ThreadSleep.For(
-            PuffinConstants.DelayAfterSwipeDuration,
+            CoreConstants.DelayAfterSwipeDuration,
             "Delay after dragging to the middle of screen");
 
         return view;

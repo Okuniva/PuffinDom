@@ -3,7 +3,7 @@ using PuffinDom.Tools.Extensions;
 
 namespace PuffinDom.Infrastructure;
 
-public class PuffinConstants
+public class CoreConstants
 {
     public const string RelativePathToRootDirectory = "..";
     public const string IOSScreenshotsFolderName = "IOSScreenshots";
@@ -31,7 +31,7 @@ public class PuffinConstants
     public static readonly TimeSpan DefaultWaitLogContainsTimeout = 7.Seconds();
 
     public static TimeSpan WaitForAppIdleBeforeAppiumActionStartTimeout
-        => PuffinEnvironmentVariables.RunDroid
+        => CoreEnvironmentVariables.RunDroid
             ? 200.Millisecond()
             : 200.Milliseconds();
 
@@ -39,7 +39,7 @@ public class PuffinConstants
         => 200.Millisecond();
 
     public static TimeSpan DefaultDelayAfterAnyAction
-        => PuffinEnvironmentVariables.RunDroid
+        => CoreEnvironmentVariables.RunDroid
             ? 150.Millisecond()
             : 200.Milliseconds();
 
@@ -47,7 +47,7 @@ public class PuffinConstants
     public static readonly TimeSpan DefaultDelayBetweenSingularTaps = 70.Milliseconds();
     public static readonly TimeSpan DefaultDragDuration = 600.Milliseconds();
 
-    public static TimeSpan DelayAfterSwipeDuration => PuffinEnvironmentVariables.RunDroid
+    public static TimeSpan DelayAfterSwipeDuration => CoreEnvironmentVariables.RunDroid
         ? 900.Milliseconds()
         : 400.Milliseconds();
     

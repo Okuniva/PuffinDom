@@ -93,6 +93,6 @@ public class ViewInnerButtonsCountValidator
                     "Unknown DialogButtonsCount enum value");
         }
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} have {buttonsCount} buttons");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} have {buttonsCount} buttons");
     }
 }

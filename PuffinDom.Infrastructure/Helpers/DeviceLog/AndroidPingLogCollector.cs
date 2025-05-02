@@ -21,7 +21,7 @@ internal class AndroidPingLogCollector : LogCollector
 
         ExternalProgramRunner.Run(
             "adb",
-            $"-s {deviceId} shell ping -D -i {PuffinConstants.ProxiesPingDelay.Seconds.CastTo<int>()} {url}",
+            $"-s {deviceId} shell ping -D -i {CoreConstants.ProxiesPingDelay.Seconds.CastTo<int>()} {url}",
             LogQueueAdd,
             collectOutput: false,
             message: $"Ping {url}",

@@ -17,7 +17,7 @@ public class IOSAppiumDriverFactory
     public static IOSDriver Create(bool startApp = true)
     {
         var driverOptions = GetOptions(startApp);
-        return new IOSDriver(PuffinConstants.DriverUri, driverOptions);
+        return new IOSDriver(CoreConstants.DriverUri, driverOptions);
     }
 
     private static AppiumOptions GetOptions(bool startApp = true)
@@ -32,17 +32,17 @@ public class IOSAppiumDriverFactory
             ImplicitWaitTimeout = 2.Minutes(),
         };
 
-        if (startApp && !PuffinEnvironmentVariables.AppIsPreinstalled)
+        if (startApp && !CoreEnvironmentVariables.AppIsPreinstalled)
             options.App = GetAppFilePath();
 
         Log.Write($"iOS Simulator Version: {options.PlatformVersion}");
 
-        options.AddAdditionalAppiumOption(MobileCapabilityType.NewCommandTimeout, (int)PuffinConstants.IOSAppiumCommandTimeout.TotalSeconds);
+        options.AddAdditionalAppiumOption(MobileCapabilityType.NewCommandTimeout, (int)CoreConstants.IOSAppiumCommandTimeout.TotalSeconds);
 #if !DEBUG
             options.AddAdditionalAppiumOption("isHeadless", true);
 #endif
-        options.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, (int)PuffinConstants.IOSAppLaunchTimeout.TotalMilliseconds);
-        options.AddAdditionalAppiumOption("deviceReadyTimeout", (int)PuffinConstants.IOSDeviceReadyTimeout.TotalSeconds);
+        options.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, (int)CoreConstants.IOSAppLaunchTimeout.TotalMilliseconds);
+        options.AddAdditionalAppiumOption("deviceReadyTimeout", (int)CoreConstants.IOSDeviceReadyTimeout.TotalSeconds);
         options.AddAdditionalAppiumOption("wdaStartupRetries", 3);
         options.AddAdditionalAppiumOption("wdaStartupRetryInterval", 45000);
         options.AddAdditionalAppiumOption("wdaLaunchTimeout", 120000);
@@ -66,7 +66,7 @@ public class IOSAppiumDriverFactory
 
     private static string GetAppFilePath()
     {
-        var testDataPath = Path.Combine(Environment.CurrentDirectory, PuffinConstants.RelativePathToTestDataDirectory);
+        var testDataPath = Path.Combine(Environment.CurrentDirectory, CoreConstants.RelativePathToTestDataDirectory);
         string? path;
         try
         {

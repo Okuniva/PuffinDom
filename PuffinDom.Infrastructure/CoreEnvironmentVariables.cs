@@ -4,7 +4,7 @@ using dotenv.net.Utilities;
 
 namespace PuffinDom.Infrastructure;
 
-public static class PuffinEnvironmentVariables
+public static class CoreEnvironmentVariables
 {
     public static bool EnableEachStepScreenshots =>
         EnvReader.TryGetBooleanValue(Names.EnableLocalScreenshots, out var value)

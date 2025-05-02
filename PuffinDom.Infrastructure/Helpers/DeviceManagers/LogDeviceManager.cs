@@ -32,7 +32,7 @@ public partial class DeviceManager
         TimeSpan? timeout = null,
         Expression<Func<string, bool>>? logCustomCondition = null)
     {
-        timeout ??= PuffinConstants.DefaultWaitLogContainsTimeout;
+        timeout ??= CoreConstants.DefaultWaitLogContainsTimeout;
         var previousLogsIndex = 0;
         foundLog = string.Empty;
         string? tempLog = null;
@@ -90,7 +90,7 @@ public partial class DeviceManager
     {
         List<string> logs;
         if (Platform == Platform.Android && androidGetLogByAdb)
-            logs = Adb.CollectLogs(PuffinEnvironmentVariables.DroidEmulatorId)
+            logs = Adb.CollectLogs(CoreEnvironmentVariables.DroidEmulatorId)
                 .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
         else
@@ -176,7 +176,7 @@ public partial class DeviceManager
     public DeviceManager ClearLog()
     {
         if (Platform == Platform.Android)
-            Adb.ClearLogcat(PuffinEnvironmentVariables.DroidEmulatorId);
+            Adb.ClearLogcat(CoreEnvironmentVariables.DroidEmulatorId);
 
         _deviceLogs.ClearLogs();
 
@@ -190,7 +190,7 @@ public partial class DeviceManager
         {
             default:
             case Platform.Android:
-                return Adb.CollectLogs(PuffinEnvironmentVariables.DroidEmulatorId);
+                return Adb.CollectLogs(CoreEnvironmentVariables.DroidEmulatorId);
             case Platform.iOS:
                 throw new NotSupportedException("iOS logs collection is supported, by GetDeviceLogs method");
         }

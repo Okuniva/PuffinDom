@@ -86,7 +86,7 @@ public abstract class DialogView<TView> : ScreenView<TView>, IIosNotRootView
         Device.TapCoordinates(customCoordinates.Value.X, customCoordinates.Value.Y);
 
         ThreadSleep.For(
-            PuffinConstants.DefaultDelayAfterAnyAction,
+            CoreConstants.DefaultDelayAfterAnyAction,
             "Extra waiting on Dialog closing with Tapping outside. Maybe it's not needed");
 
         switch (_dialogCanBeClosedTappingOutside)

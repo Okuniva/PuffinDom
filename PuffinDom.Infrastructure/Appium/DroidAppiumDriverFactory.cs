@@ -12,10 +12,10 @@ public class DroidAppiumDriverFactory
     {
         using var logContext = Log.PushContext("Appium android driver starting");
 
-        var driver = new AndroidDriver(PuffinConstants.DriverUri, GetOptions());
+        var driver = new AndroidDriver(CoreConstants.DriverUri, GetOptions());
 
         driver.ConfiguratorSetWaitForIdleTimeout(
-            (int)PuffinConstants.WaitForAppIdleBeforeAppiumActionStartTimeout.TotalMilliseconds);
+            (int)CoreConstants.WaitForAppIdleBeforeAppiumActionStartTimeout.TotalMilliseconds);
 
         return driver;
     }
@@ -30,7 +30,7 @@ public class DroidAppiumDriverFactory
 
         options.AddAdditionalAppiumOption(
             MobileCapabilityType.NewCommandTimeout,
-            (int)PuffinConstants.DroidAppiumCommandTimeout.TotalMilliseconds);
+            (int)CoreConstants.DroidAppiumCommandTimeout.TotalMilliseconds);
 
         options.AddAdditionalAppiumOption(
             "skipLogcatCapture",

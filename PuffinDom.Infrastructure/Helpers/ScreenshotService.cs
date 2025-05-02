@@ -13,7 +13,7 @@ public class ScreenshotService : IScreenshotService
 
     public ScreenshotService()
     {
-        ScreenshotsEnabled = PuffinEnvironmentVariables.EnableEachStepScreenshots;
+        ScreenshotsEnabled = CoreEnvironmentVariables.EnableEachStepScreenshots;
     }
 
     private bool ScreenshotsEnabled
@@ -23,7 +23,7 @@ public class ScreenshotService : IScreenshotService
         {
             _screenshotsEnabled = value;
 
-            if (PuffinEnvironmentVariables.EnableEachStepScreenshots)
+            if (CoreEnvironmentVariables.EnableEachStepScreenshots)
                 Log.Write(
                     value
                         ? "Screenshots enabled"
@@ -34,7 +34,7 @@ public class ScreenshotService : IScreenshotService
     public IDisposable TurnOffScreenshots()
     {
         var changed = false;
-        if (PuffinEnvironmentVariables.EnableEachStepScreenshots && ScreenshotsEnabled)
+        if (CoreEnvironmentVariables.EnableEachStepScreenshots && ScreenshotsEnabled)
         {
             changed = true;
             ScreenshotsEnabled = false;
@@ -50,7 +50,7 @@ public class ScreenshotService : IScreenshotService
 
     public void TakeScreenshot(Platform platform, string? fileNamePostfix, bool force, bool assert = true)
     {
-        if (!PuffinEnvironmentVariables.EnableEachStepScreenshots || !ScreenshotsEnabled)
+        if (!CoreEnvironmentVariables.EnableEachStepScreenshots || !ScreenshotsEnabled)
             if (!force)
                 return;
 
@@ -67,16 +67,16 @@ public class ScreenshotService : IScreenshotService
                 default:
                 case Platform.Android:
                     Adb.TakeScreenshot(
-                        PuffinEnvironmentVariables.DroidEmulatorId,
+                        CoreEnvironmentVariables.DroidEmulatorId,
                         fileName,
                         assert,
-                        PuffinEnvironmentVariables.ScreenshotsDirectory);
+                        CoreEnvironmentVariables.ScreenshotsDirectory);
 
                     break;
                 case Platform.iOS:
                     XCodeCommandLine.TakeScreenshot(
-                        PuffinConstants.iOSSimulatorName,
-                        PuffinConstants.IOSScreenshotsFolderName,
+                        CoreConstants.iOSSimulatorName,
+                        CoreConstants.IOSScreenshotsFolderName,
                         fileName);
 
                     break;

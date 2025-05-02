@@ -115,6 +115,6 @@ public class DroidEmulatorConfigurationHelper
 
         googleApis += androidSystemVersion == AndroidSystemName.Android21 ? "" : "_playstore";
 
-        return PuffinEnvironmentVariables.IsGoogleServicesEnabled ? googleApis : "default";
+        return CoreEnvironmentVariables.IsGoogleServicesEnabled ? googleApis : "default";
     }
 }

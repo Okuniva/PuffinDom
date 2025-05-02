@@ -19,7 +19,7 @@ public class ConditionWaitingStrategy
             > 20 => 2.Seconds(),
             > 10 => 1.Second(),
             > 5 => 0.5.Seconds(),
-            _ => PuffinConstants.DefaultDelayBetweenViewExistingRechecks,
+            _ => CoreConstants.DefaultDelayBetweenViewExistingRechecks,
         };
 
         ThreadSleep.For(timeToSleep, "Delay between condition recheck");
@@ -35,7 +35,7 @@ public class ConditionWaitingStrategy
     {
         using var logContext = Log.PushContext($"Waiting condition for {conditionName}");
 
-        timeout ??= PuffinConstants.ViewWaitingTimeout;
+        timeout ??= CoreConstants.ViewWaitingTimeout;
         var waitStartTime = DateTime.Now;
         var currentTry = 0;
 

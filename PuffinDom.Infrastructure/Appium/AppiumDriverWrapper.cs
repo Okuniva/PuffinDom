@@ -129,7 +129,7 @@ internal class AppiumDriverWrapper : IDisposable
         if (times < 1)
             throw new ArgumentOutOfRangeException(nameof(times), "Times should be greater than 0");
 
-        pauseBetweenTaps ??= PuffinConstants.DefaultDelayBetweenSingularTaps;
+        pauseBetweenTaps ??= CoreConstants.DefaultDelayBetweenSingularTaps;
 
         var touchDevice = new PointerInputDevice(PointerKind.Touch);
         var sequence = new ActionSequence(touchDevice);
@@ -210,7 +210,7 @@ internal class AppiumDriverWrapper : IDisposable
         InvalidateCachedPageSource();
 
         var touchDevice = new PointerInputDevice(PointerKind.Touch);
-        duration ??= PuffinConstants.DefaultDragDuration;
+        duration ??= CoreConstants.DefaultDragDuration;
 
         Log.Write(
             $"Dragging from {fromX}, {fromY} to {toX}, {toY} " +

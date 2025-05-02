@@ -21,7 +21,7 @@ public static class ViewAssertsExtensions
             true,
             customMessage: customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} is Enabled");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} is Enabled");
         return view;
     }
 
@@ -34,7 +34,7 @@ public static class ViewAssertsExtensions
             true,
             customMessage: customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} is Disabled");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} is Disabled");
         return view;
     }
 
@@ -50,7 +50,7 @@ public static class ViewAssertsExtensions
             true,
             customMessage: customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} is Disabled");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} is Disabled");
         return view;
     }
 
@@ -62,7 +62,7 @@ public static class ViewAssertsExtensions
                 $"{view} is not Selected but should be",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} is Selected");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} is Selected");
         return view;
     }
 
@@ -74,7 +74,7 @@ public static class ViewAssertsExtensions
                 $"{view} not found but should be on screen right now",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} found");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} found");
         return view;
     }
 
@@ -86,7 +86,7 @@ public static class ViewAssertsExtensions
                 $"{view} found but should not be on screen right now",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} is not on screen");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} is not on screen");
         return view;
     }
 
@@ -98,7 +98,7 @@ public static class ViewAssertsExtensions
                 $"Waiting for {listView} to be empty"))
             throw new ViewAssertionException($"List {listView} is not empty and has ({listView.Count}) items but should be empty", customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} is empty");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} is empty");
         return listView;
     }
 
@@ -110,7 +110,7 @@ public static class ViewAssertsExtensions
                 $"List {listView} contains {listView.Count} elements " +
                 "but should contain 1 row");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} contains only 1 row");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} contains only 1 row");
         return listView;
     }
 
@@ -120,7 +120,7 @@ public static class ViewAssertsExtensions
         if (!ViewWaitingStrategy.WaitCondition(listView.Any, listView.ViewFullName, maxTime: timeout))
             throw new ViewAssertionException($"List {listView} is empty but should not be empty");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} is not empty");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} is not empty");
         return listView;
     }
 
@@ -132,7 +132,7 @@ public static class ViewAssertsExtensions
                 $"List {listView} contains {listView.Count} rows " +
                 $"but should contain {rowsCount} rows");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} contains {rowsCount} rows");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} contains {rowsCount} rows");
     }
 
     public static void AssertContainsRow<TItem>(
@@ -147,7 +147,7 @@ public static class ViewAssertsExtensions
                 $"but it doesn't",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} contains needed row");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} contains needed row");
     }
 
     public static void AssertContainsNoLessRows<TItem>(this ListView<TItem> listView, int minRowsCount, string? customMessage = null)
@@ -159,7 +159,7 @@ public static class ViewAssertsExtensions
                 $"but should contain minimum {minRowsCount} rows",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}List {listView} contains {listView.Count} rows");
+        Log.Write($"{CoreConstants.ValidationPassed}List {listView} contains {listView.Count} rows");
     }
 
     public static TView AssertChecked<TView>(this TView checkBox)
@@ -168,7 +168,7 @@ public static class ViewAssertsExtensions
         if (!ViewWaitingStrategy.WaitCondition(() => checkBox.IsChecked, checkBox.ViewFullName))
             throw new ViewAssertionException($"{checkBox} is not checked but should be checked");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{checkBox} is checked");
+        Log.Write($"{CoreConstants.ValidationPassed}{checkBox} is checked");
         return checkBox;
     }
 
@@ -181,7 +181,7 @@ public static class ViewAssertsExtensions
         if (!ViewWaitingStrategy.WaitCondition(() => checkBox.IsChecked, checkBox.ViewFullName))
             throw new ViewAssertionException($"{checkBox} is not checked but should be checked");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{checkBox} is checked");
+        Log.Write($"{CoreConstants.ValidationPassed}{checkBox} is checked");
         return checkBox;
     }
 
@@ -199,7 +199,7 @@ public static class ViewAssertsExtensions
         if (!ViewWaitingStrategy.WaitCondition(() => !checkBox.IsChecked, checkBox.ViewFullName))
             throw new ViewAssertionException($"CheckBox {checkBox} is checked but should be unchecked");
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{checkBox} is unchecked");
+        Log.Write($"{CoreConstants.ValidationPassed}{checkBox} is unchecked");
         return checkBox;
     }
 
@@ -223,7 +223,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{view.Text}' should have text: '{expectedText}'",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view.Text} has text: '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view.Text} has text: '{expectedText}'");
 
         return view;
     }
@@ -243,7 +243,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{view.Text}' does not become to view with text: '{expectedText}'",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} has text: '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} has text: '{expectedText}'");
 
         return view;
     }
@@ -263,7 +263,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{view.Text}' does not become to contains text: '{expectedText}'",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} contains text: '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} contains text: '{expectedText}'");
 
         return view;
     }
@@ -285,8 +285,8 @@ public static class ViewAssertsExtensions
 
         Log.Write(
             regexPatternToCheck != expectedText
-                ? $"{PuffinConstants.ValidationPassed}{view} has placeholder '{view.Text}' which matches regex: '{regexPatternToCheck}'"
-                : $"{PuffinConstants.ValidationPassed}{view} has placeholder '{view.Text}'");
+                ? $"{CoreConstants.ValidationPassed}{view} has placeholder '{view.Text}' which matches regex: '{regexPatternToCheck}'"
+                : $"{CoreConstants.ValidationPassed}{view} has placeholder '{view.Text}'");
 
         return view;
     }
@@ -300,7 +300,7 @@ public static class ViewAssertsExtensions
                 customMessage);
 
         Log.Write(
-            $"{PuffinConstants.ValidationPassed}{view} with text '{view.Text}' starts with text: '{expectedStartText}'");
+            $"{CoreConstants.ValidationPassed}{view} with text '{view.Text}' starts with text: '{expectedStartText}'");
 
         return view;
     }
@@ -315,7 +315,7 @@ public static class ViewAssertsExtensions
                 customMessage);
 
         Log.Write(
-            $"{PuffinConstants.ValidationPassed}{view} with text '{view.Text}' ends with text: '{expectedEndText}'");
+            $"{CoreConstants.ValidationPassed}{view} with text '{view.Text}' ends with text: '{expectedEndText}'");
 
         return view;
     }
@@ -330,7 +330,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{viewText}' should not have text '{expectedText}' but it has",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} with text '{viewText}' must not have text '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} with text '{viewText}' must not have text '{expectedText}'");
         return view;
     }
 
@@ -344,7 +344,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{viewText}' does not to contain text: '{expectedText}'",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} with Text '{viewText}' contains text '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} with Text '{viewText}' contains text '{expectedText}'");
 
         return view;
     }
@@ -359,7 +359,7 @@ public static class ViewAssertsExtensions
                 $"{view} with text '{viewText}' should not to contain text: '{expectedText}'",
                 customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} with Text '{viewText}' contains text '{expectedText}'");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} with Text '{viewText}' contains text '{expectedText}'");
 
         return view;
     }
@@ -370,7 +370,7 @@ public static class ViewAssertsExtensions
         if (view.Text == string.Empty)
             throw new ViewAssertionException($"{view} should not have empty text but it has", customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} with text '{view.Text}' should not be empty");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} with text '{view.Text}' should not be empty");
         return view;
     }
 
@@ -381,7 +381,7 @@ public static class ViewAssertsExtensions
         if (!ViewWaitingStrategy.WaitCondition(() => string.IsNullOrEmpty(view.Text), view.ViewFullName))
             throw new ViewAssertionException($"{view} has text '{view.Text}' but it should be empty", customMessage);
 
-        Log.Write($"{PuffinConstants.ValidationPassed}{view} has empty text");
+        Log.Write($"{CoreConstants.ValidationPassed}{view} has empty text");
         return view;
     }
 }

@@ -41,7 +41,7 @@ public class ViewWaitingStrategy
             $"Waiting {view}" +
             $"{(!timeOut.HasValue ? string.Empty : $" with specific timeout {timeOut.Value.ToDisplayString()}")}");
 
-        timeOut ??= PuffinConstants.ViewWaitingTimeout;
+        timeOut ??= CoreConstants.ViewWaitingTimeout;
 
         var waitStartTime = DateTime.Now;
         var currentTry = 0;
@@ -75,7 +75,7 @@ public class ViewWaitingStrategy
             > 20 => 2.Seconds(),
             > 10 => 1.Second(),
             > 5 => 0.5.Seconds(),
-            _ => PuffinConstants.DefaultDelayBetweenViewExistingRechecks,
+            _ => CoreConstants.DefaultDelayBetweenViewExistingRechecks,
         };
 
         ThreadSleep.For(timeToSleep, "Delay between view existing rechecks");
@@ -91,7 +91,7 @@ public class ViewWaitingStrategy
     {
         using var logContext = Log.PushContext($"Waiting condition for {conditionName}");
 
-        maxTime ??= PuffinConstants.ViewWaitingTimeout;
+        maxTime ??= CoreConstants.ViewWaitingTimeout;
         var waitStartTime = DateTime.Now;
         var currentTry = 0;
 
@@ -123,7 +123,7 @@ public class ViewWaitingStrategy
 
     public static bool WaitDisappeared(View view, TimeSpan? timeout = null, bool assert = true, string? customMessage = null)
     {
-        timeout ??= PuffinConstants.ViewDisappearingTimeout;
+        timeout ??= CoreConstants.ViewDisappearingTimeout;
 
         using var logContext = Log.PushContext($"Waiting disappearing {view} in {timeout.Value.ToDisplayString()}");
 

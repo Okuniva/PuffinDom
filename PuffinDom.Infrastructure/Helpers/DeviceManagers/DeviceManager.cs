@@ -57,7 +57,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
 
     public string DeviceApiVersion => _api ??= Platform switch
     {
-        Platform.Android => Adb.GetDeviceAndroidApi(PuffinEnvironmentVariables.DroidEmulatorId),
+        Platform.Android => Adb.GetDeviceAndroidApi(CoreEnvironmentVariables.DroidEmulatorId),
         Platform.iOS => XCodeCommandLine.GetIOSDeviceIdentifier(IOSDeviceName),
         _ => throw new ArgumentOutOfRangeException(),
     };
@@ -72,7 +72,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             switch (Platform)
             {
                 case Platform.Android:
-                    _density = Adb.GetDensity(PuffinEnvironmentVariables.DroidEmulatorId);
+                    _density = Adb.GetDensity(CoreEnvironmentVariables.DroidEmulatorId);
                     break;
                 case Platform.iOS:
                     var screenInfo = XCodeCommandLine.GetDeviceScreenInfo();
@@ -98,7 +98,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             {
                 default:
                 case Platform.Android:
-                    return PuffinEnvironmentVariables.DroidEmulatorId;
+                    return CoreEnvironmentVariables.DroidEmulatorId;
                 case Platform.iOS:
                     return XCodeCommandLine.GetBootedDeviceUdid();
             }
@@ -117,7 +117,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
                 default:
                 case Platform.Android:
                 {
-                    var size = Adb.GetDeviceScreenSize(PuffinEnvironmentVariables.DroidEmulatorId);
+                    var size = Adb.GetDeviceScreenSize(CoreEnvironmentVariables.DroidEmulatorId);
                     _deviceRect = new Rect(0, 0, size.Width, size.Height);
                     break;
                 }
@@ -140,7 +140,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.CloseApp(PuffinEnvironmentVariables.DroidEmulatorId, bundleId, assert);
+                Adb.CloseApp(CoreEnvironmentVariables.DroidEmulatorId, bundleId, assert);
                 break;
             case Platform.iOS:
                 XCodeCommandLine.CloseApp(IOSDeviceName, bundleId, assert);
@@ -159,13 +159,13 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             default:
             case Platform.Android:
                 Adb.RemoveAllFilesFromDeviceFolder(
-                    PuffinEnvironmentVariables.DroidEmulatorId,
-                    PuffinEnvironmentVariables.ScreenshotsDirectory);
+                    CoreEnvironmentVariables.DroidEmulatorId,
+                    CoreEnvironmentVariables.ScreenshotsDirectory);
 
                 break;
             case Platform.iOS:
-                if (Directory.Exists(PuffinConstants.IOSScreenshotsFolderName))
-                    Directory.Delete(PuffinConstants.IOSScreenshotsFolderName, true);
+                if (Directory.Exists(CoreConstants.IOSScreenshotsFolderName))
+                    Directory.Delete(CoreConstants.IOSScreenshotsFolderName, true);
 
                 break;
         }
@@ -179,7 +179,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.DownloadFolder(PuffinEnvironmentVariables.DroidEmulatorId, PuffinEnvironmentVariables.ScreenshotsDirectory, destinationFolder);
+                Adb.DownloadFolder(CoreEnvironmentVariables.DroidEmulatorId, CoreEnvironmentVariables.ScreenshotsDirectory, destinationFolder);
                 RemoveAllUnnecessaryDirectories(destinationFolder);
                 break;
 
@@ -189,7 +189,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
                         Directory.Delete(directory, true);
                 }
             case Platform.iOS:
-                Directory.Move(PuffinConstants.IOSScreenshotsFolderName, destinationFolder);
+                Directory.Move(CoreConstants.IOSScreenshotsFolderName, destinationFolder);
 
                 break;
         }
@@ -214,7 +214,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
                     return this;
                 }
 
-                Adb.SendKey(PuffinEnvironmentVariables.DroidEmulatorId, AndroidKeyCodes.HOME);
+                Adb.SendKey(CoreEnvironmentVariables.DroidEmulatorId, AndroidKeyCodes.HOME);
 
                 WaitCondition(
                     () => bundleId != AndroidOpenedAppBundleId,
@@ -238,16 +238,16 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.RemoveApp(PuffinEnvironmentVariables.DroidEmulatorId, bundleId, log);
+                Adb.RemoveApp(CoreEnvironmentVariables.DroidEmulatorId, bundleId, log);
                 break;
             case Platform.iOS:
             {
-                XCodeCommandLine.UninstallApp(PuffinConstants.iOSSimulatorName, bundleId, false, log);
+                XCodeCommandLine.UninstallApp(CoreConstants.iOSSimulatorName, bundleId, false, log);
                 ThreadSleep.For(4.Seconds(), "Delay after uninstalling app");
                 if (removeCalabashService)
                 {
                     // ReSharper disable once StringLiteralTypo
-                    XCodeCommandLine.UninstallApp(PuffinConstants.iOSSimulatorName, "sh.calaba.DeviceAgent.xctrunner", false, log);
+                    XCodeCommandLine.UninstallApp(CoreConstants.iOSSimulatorName, "sh.calaba.DeviceAgent.xctrunner", false, log);
                     ThreadSleep.For(4.Seconds(), "Delay after uninstalling app");
                 }
 
@@ -266,10 +266,10 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.TakeScreenshotAndSaveLocally(PuffinEnvironmentVariables.DroidEmulatorId, PuffinEnvironmentVariables.ScreenshotsDirectory);
+                Adb.TakeScreenshotAndSaveLocally(CoreEnvironmentVariables.DroidEmulatorId, CoreEnvironmentVariables.ScreenshotsDirectory);
                 break;
             case Platform.iOS:
-                XCodeCommandLine.TakeScreenshot(IOSDeviceName, PuffinConstants.IOSScreenshotsFolderName);
+                XCodeCommandLine.TakeScreenshot(IOSDeviceName, CoreConstants.IOSScreenshotsFolderName);
                 break;
         }
     }
@@ -281,7 +281,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.ShutdownVirtualDevice(PuffinEnvironmentVariables.DroidEmulatorId);
+                Adb.ShutdownVirtualDevice(CoreEnvironmentVariables.DroidEmulatorId);
                 break;
             case Platform.iOS:
                 XCodeCommandLine.ShutdownDevice(IOSDeviceName, false);
@@ -304,7 +304,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.OpenDeepLink(PuffinEnvironmentVariables.DroidEmulatorId, deepLink, scheme, deepLinkHost);
+                Adb.OpenDeepLink(CoreEnvironmentVariables.DroidEmulatorId, deepLink, scheme, deepLinkHost);
                 break;
             case Platform.iOS:
                 XCodeCommandLine.OpenDeepLink(IOSDeviceName, deepLink, scheme, deepLinkHost);
@@ -335,7 +335,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.StartApp(PuffinEnvironmentVariables.DroidEmulatorId, bundleId, log);
+                Adb.StartApp(CoreEnvironmentVariables.DroidEmulatorId, bundleId, log);
                 break;
             case Platform.iOS:
                 XCodeCommandLine.StartApp(IOSDeviceName, bundleId, log);
@@ -358,7 +358,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             case Platform.Android:
 
                 for (var i = 0; i < times; i++)
-                    Adb.TapCoordinates(PuffinEnvironmentVariables.DroidEmulatorId, x, y);
+                    Adb.TapCoordinates(CoreEnvironmentVariables.DroidEmulatorId, x, y);
 
                 break;
 
@@ -372,7 +372,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         InvalidateCachedPageSource();
 
         ThreadSleep.For(
-            PuffinConstants.DefaultDelayAfterAnyAction,
+            CoreConstants.DefaultDelayAfterAnyAction,
             "Waiting after tap");
 
         return this;
@@ -400,7 +400,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             for (var i = 0; i < times; i++)
                 Adb.SendKey(
-                    PuffinEnvironmentVariables.DroidEmulatorId,
+                    CoreEnvironmentVariables.DroidEmulatorId,
                     AndroidKeyCodes.FORWARD_DEL,
                     false);
         }
@@ -417,7 +417,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.InputText(PuffinEnvironmentVariables.DroidEmulatorId, text, false);
+                Adb.InputText(CoreEnvironmentVariables.DroidEmulatorId, text, false);
                 InvalidateCachedPageSource();
                 break;
             case Platform.iOS:
@@ -460,12 +460,12 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             default:
             case Platform.Android:
                 Adb.Swipe(
-                    PuffinEnvironmentVariables.DroidEmulatorId,
+                    CoreEnvironmentVariables.DroidEmulatorId,
                     fromXPx,
                     fromYPx,
                     toXPx,
                     toYPx,
-                    duration ?? PuffinConstants.DefaultDragDuration);
+                    duration ?? CoreConstants.DefaultDragDuration);
 
                 break;
             case Platform.iOS:
@@ -487,7 +487,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
             viewRect.CenterX,
             viewRect.CenterY,
             true,
-            PuffinConstants.TapAndHoldDefaultHoldDuration);
+            CoreConstants.TapAndHoldDefaultHoldDuration);
     }
 
     
@@ -497,7 +497,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                Adb.InstallApp(PuffinEnvironmentVariables.DroidEmulatorId, pathToBundleFile);
+                Adb.InstallApp(CoreEnvironmentVariables.DroidEmulatorId, pathToBundleFile);
                 break;
             case Platform.iOS:
                 XCodeCommandLine.InstallApp(IOSDeviceName, pathToBundleFile, log);
@@ -530,7 +530,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
                 if (attempt == 3)
                     throw new TechnicalCrashFailTestException($"Failed to start Appium fully after {attempt} attempts", e);
 
-                ThreadSleep.For(PuffinConstants.AppiumServerStartRetriesDelay, "Delay between appium restarts");
+                ThreadSleep.For(CoreConstants.AppiumServerStartRetriesDelay, "Delay between appium restarts");
             }
 
         return this;
@@ -610,7 +610,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         {
             default:
             case Platform.Android:
-                return Adb.GetAppProcessId(PuffinEnvironmentVariables.DroidEmulatorId, bundleId);
+                return Adb.GetAppProcessId(CoreEnvironmentVariables.DroidEmulatorId, bundleId);
             case Platform.iOS:
                 return XCodeCommandLine.GetAppProcessId(bundleId);
         }
@@ -620,7 +620,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
     {
         return Platform == Platform.iOS
             ? DateTime.Now
-            : Adb.GetAndroidDeviceTime(PuffinEnvironmentVariables.DroidEmulatorId);
+            : Adb.GetAndroidDeviceTime(CoreEnvironmentVariables.DroidEmulatorId);
     }
 
     public void Dispose()
