@@ -1,0 +1,70 @@
+using System.Xml;
+using PuffinDom.Tools.Extensions;
+
+namespace PuffinDom.Infrastructure;
+
+public class PuffinConstants
+{
+    public const string RelativePathToRootDirectory = "..";
+    public const string IOSScreenshotsFolderName = "IOSScreenshots";
+
+    public static Uri DriverUri => new($"http://localhost:{AppiumPort}/wd/hub");
+
+    public const string ValidationPassed = "VALIDATION PASSED | ";
+
+    // ReSharper disable once InconsistentNaming
+    public const string iOSSimulatorName = "booted";
+
+    public const string CrashOfInstrumentationMessage =
+        "Crash of the Application. BUT it's an instrumentation stuff failure. You should try this test once again. These cases are under investigate";
+    public const string AndroidBrowserBundleId = "com.android.chrome";
+    public const string AndroidChromiumBrowserBundleId = "org.chromium.webview_shell";
+    public const string Android21BrowserBundleId = "com.android.browser";
+    public const int AppiumPort = 4723;
+    public const string AppiumLogFileName = "appium.log";
+
+    public static readonly string RelativePathToTestDataDirectory =
+        Path.Combine(RelativePathToRootDirectory, "TestData");
+
+    public static readonly TimeSpan ViewWaitingTimeout = 9.Seconds();
+    public static readonly TimeSpan ViewDisappearingTimeout = 6.Seconds();
+    public static readonly TimeSpan DefaultWaitLogContainsTimeout = 7.Seconds();
+
+    public static TimeSpan WaitForAppIdleBeforeAppiumActionStartTimeout
+        => PuffinEnvironmentVariables.RunDroid
+            ? 200.Millisecond()
+            : 200.Milliseconds();
+
+    public static TimeSpan DefaultDelayBetweenViewExistingRechecks
+        => 200.Millisecond();
+
+    public static TimeSpan DefaultDelayAfterAnyAction
+        => PuffinEnvironmentVariables.RunDroid
+            ? 150.Millisecond()
+            : 200.Milliseconds();
+
+    public static readonly TimeSpan TapAndHoldDefaultHoldDuration = 1.5.Seconds();
+    public static readonly TimeSpan DefaultDelayBetweenSingularTaps = 70.Milliseconds();
+    public static readonly TimeSpan DefaultDragDuration = 600.Milliseconds();
+
+    public static TimeSpan DelayAfterSwipeDuration => PuffinEnvironmentVariables.RunDroid
+        ? 900.Milliseconds()
+        : 400.Milliseconds();
+    
+    public static readonly TimeSpan ProxiesPingDelay = 1.Seconds();
+    public static readonly TimeSpan DelayAfterScrollDuration = 600.Milliseconds();
+    public static readonly TimeSpan AppiumServerMaxWaitTime = 15.Seconds();
+    public static readonly TimeSpan AppiumServerStartedChecksDelayBetweenRetries = 1.Second();
+    public static readonly TimeSpan IOSAppiumCommandTimeout = 2.Minutes();
+    public static readonly TimeSpan DroidAppiumCommandTimeout = 3.Seconds();
+    public static readonly TimeSpan IOSDeviceReadyTimeout = 30.Seconds();
+    public static readonly TimeSpan IOSAppLaunchTimeout = 30.Seconds();
+    public static readonly TimeSpan AppiumServerStartUpTimeOut = 1.Minute();
+    public static readonly TimeSpan AppiumServerStartRetriesDelay = 1.Minute();
+    public static readonly TimeSpan TaskRerunDelay = 200.Milliseconds();
+
+
+    public const int MinimumDpToScrollUpOrDown = 30;
+    
+    public static readonly List<string> PingUrls = ["8.8.8.8"];
+}

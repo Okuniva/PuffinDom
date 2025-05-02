@@ -1,0 +1,40 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PuffinDom.Core", "PuffinDom.Core", "{71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.Tools", "PuffinDom.Tools\PuffinDom.Tools.csproj", "{9A33E686-8923-4EE9-96A0-18ED2FF4A437}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.Infrastructure", "PuffinDom.Infrastructure\PuffinDom.Infrastructure.csproj", "{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuffinDom.UI", "PuffinDom.UI\PuffinDom.UI.csproj", "{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A33E686-8923-4EE9-96A0-18ED2FF4A437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A33E686-8923-4EE9-96A0-18ED2FF4A437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A33E686-8923-4EE9-96A0-18ED2FF4A437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A33E686-8923-4EE9-96A0-18ED2FF4A437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A33E686-8923-4EE9-96A0-18ED2FF4A437} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
+		{74FC78C9-8AD4-4421-91D2-F8D1E279DAB1} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
+		{6AD26762-BBFC-4C07-9EB2-8329FD0D7426} = {71FE0425-E0FE-48E9-9BDC-2F478FB71BD0}
+	EndGlobalSection
+EndGlobal
