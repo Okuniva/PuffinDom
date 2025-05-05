@@ -9,8 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Appium.WebDriver" Version="7.2.0" />
     <PackageReference Include="dotenv.net" Version="3.2.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-preview.3.25171.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StrongInject" Version="1.4.5-CI-20220524-023137" />
     <PackageReference Include="XPath2" Version="1.1.5" />
   </ItemGroup>
 

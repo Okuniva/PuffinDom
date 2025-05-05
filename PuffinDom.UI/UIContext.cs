@@ -1,5 +1,6 @@
-using PuffinDom.Infrastructure;
+using System;
 using PuffinDom.Infrastructure.Helpers;
+using PuffinDom.Infrastructure;
 using PuffinDom.Infrastructure.Helpers.Device;
 using PuffinDom.Infrastructure.Helpers.DeviceManagers;
 
@@ -10,7 +11,7 @@ public class UIContext
     private static DeviceManager? _deviceManager;
     
     public static DeviceManager Device =>
-        _deviceManager ??= new DeviceManagerContainer(CoreEnvironmentVariables.Device).GetDeviceManager();
+        _deviceManager ??= new DeviceManagerContainerRegistration(CoreEnvironmentVariables.Device).Resolve().Value;
 
     private static Platform? _platform;
 
@@ -28,6 +29,8 @@ public class UIContext
 
     // ReSharper disable once InconsistentNaming
     public static bool iOS => Platform == Platform.iOS;
-    public static readonly string DeviceApiVersion = _deviceManager!.DeviceApiVersion;
-    public static readonly string PackageId = CoreEnvironmentVariables.PackageId;
+    
+    // Fix the static initialization order issue by using properties instead of readonly fields
+    public static string DeviceApiVersion => Device.DeviceApiVersion;
+    public static string PackageId => CoreEnvironmentVariables.PackageId;
 }
