@@ -99,7 +99,7 @@ internal class AppiumDriverWrapper : IDisposable
         IWebElement? element = null;
 
         RunAppiumCommand(
-            () => element = _driver?.SwitchTo().ActiveElement());
+            () => element = _driver.NotNull().SwitchTo().ActiveElement());
 
         element?.SendKeys(text);
 
@@ -109,7 +109,8 @@ internal class AppiumDriverWrapper : IDisposable
     public void ClearText()
     {
         RunAppiumCommand(
-            () => _driver?
+            () => _driver
+                .NotNull()
                 .SwitchTo()
                 .ActiveElement()
                 .Clear());
@@ -161,19 +162,19 @@ internal class AppiumDriverWrapper : IDisposable
             Log.Write(
                 $"Appium tapping [{x}, {y}]");
 
-        RunAppiumCommand(() => _driver?.PerformActions(new List<ActionSequence> { sequence }));
+        RunAppiumCommand(() => _driver.NotNull().PerformActions(new List<ActionSequence> { sequence }));
     }
 
     private string GetPageSource(bool full = false)
     {
         return _deviceManager.Platform switch
         {
-            Platform.Android => _driver?.PageSource,
+            Platform.Android => _driver.NotNull().PageSource,
             Platform.iOS =>
                 full
-                    ? IOSFilterXml.FilterFullPageXml(_driver?.PageSource!)
+                    ? IOSFilterXml.FilterFullPageXml(_driver.NotNull().PageSource)
                     : _iosFilterXml.FilterXml(
-                        _driver?
+                        _driver.NotNull()
                             .ExecuteScript(
                                 "mobile: source",
                                 new Dictionary<string, object>
@@ -184,13 +185,13 @@ internal class AppiumDriverWrapper : IDisposable
                             .ToString() ?? throw new Exception("Failed to get page source")
                     ),
             _ => throw new ArgumentOutOfRangeException(),
-        } ?? throw new InvalidOperationException();
+        };
     }
 
     public void PressHomeButton()
     {
         using var logContext = Log.PushContext("Press home button");
-        _driver?
+        _driver.NotNull()
             .ExecuteScript(
                 "mobile: pressButton",
                 new Dictionary<string, object>
@@ -228,7 +229,7 @@ internal class AppiumDriverWrapper : IDisposable
         sequence = sequence.Up(touchDevice);
 
         RunAppiumCommand(
-            () => _driver?
+            () => _driver.NotNull()
                 .PerformActions(
                 [
                     sequence,
@@ -240,7 +241,7 @@ internal class AppiumDriverWrapper : IDisposable
         var isKeyboardShown = false;
 
         RunAppiumCommand(
-            () => isKeyboardShown = _driver!.IsKeyboardShown());
+            () => isKeyboardShown = _driver.NotNull().IsKeyboardShown());
 
         return isKeyboardShown;
     }
