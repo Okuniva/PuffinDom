@@ -67,7 +67,7 @@ public static class XPathStringExtensions
         return $"{query}/ancestor::{parentClass}";
     }
 
-    private static string IdAndTextAndSelected(this string query, string id, string text)
+    public static string IdAndTextAndSelected(this string query, string id, string text)
     {
         return $"{query}//*[{PlainId(id)} and @selected='true' and {PlainText(text)}]";
     }

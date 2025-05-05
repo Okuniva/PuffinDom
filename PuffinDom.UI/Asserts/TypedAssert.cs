@@ -1,4 +1,6 @@
-﻿using Assert = NUnit.Framework.Legacy.ClassicAssert;
+﻿#nullable enable
+
+using Assert = NUnit.Framework.Legacy.ClassicAssert;
 
 namespace PuffinDom.UI.Asserts;
 

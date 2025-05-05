@@ -7,16 +7,15 @@ using PuffinDom.UI.Asserts;
 using PuffinDom.UI.Enums;
 using PuffinDom.UI.Extensions;
 using PuffinDom.UI.Helpers;
-using PuffinDom.UI.Views.IOSSpecificView;
 using Query = System.Func<string, string>;
 
 namespace PuffinDom.UI.Views;
 
 public class TextInput : ViewWithPlaceholder<TextInput>
 {
+    private readonly IDismissKeyboard _dismissKeyboard;
     private readonly TextInputType _inputType;
     private readonly PlaceholderPlatformFlags? _placeholderPlatformFlags;
-    private readonly IDismissKeyboard _dismissKeyboard;
 
     public TextInput(
         View? parent,
@@ -111,7 +110,7 @@ public class TextInput : ViewWithPlaceholder<TextInput>
     private TextInput ClearTextIfNeeded(
         KeyboardDismissType keyboardDismiss,
         out bool tapped,
-        KeyboardDismissType? textInputKeyboardDismissType = null,
+        // KeyboardDismissType? textInputKeyboardDismissType = null,
         bool expectPlaceholder = true)
     {
         using var logContext = Log.PushContext("Clearing text");
@@ -183,7 +182,7 @@ public class TextInput : ViewWithPlaceholder<TextInput>
 
         var tapped = false;
         if (clearText)
-            ClearTextIfNeeded(KeyboardDismissType.DoNot, out tapped, keyboardDismiss, expectPlaceholder);
+            ClearTextIfNeeded(KeyboardDismissType.DoNot, out tapped, expectPlaceholder);
 
         Log.Write($"Current text: '{Text}'");
 
