@@ -11,7 +11,7 @@ public static class TestFilesReaderHelper
     public static IEnumerable<Tuple<string, string>> GetAllFilesContent(string directoryPath)
     {
         var combinedPath = Path.Combine(
-            CoreConstants.GetBaseTestPath(),
+            CoreConstants.GetBaseProjectPath(),
             directoryPath);
 
         ClassicAssert.True(Directory.Exists(combinedPath));

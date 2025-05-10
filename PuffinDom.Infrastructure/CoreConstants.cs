@@ -26,7 +26,7 @@ public class CoreConstants
     public const int MinimumDpToScrollUpOrDown = 30;
 
     public static readonly string RelativePathToTestDataDirectory =
-        Path.Combine(GetBaseTestPath(), "TestData");
+        Path.Combine(GetBaseProjectPath(), "TestData");
 
     public static readonly TimeSpan ViewWaitingTimeout = 9.Seconds();
     public static readonly TimeSpan ViewDisappearingTimeout = 6.Seconds();
@@ -67,7 +67,7 @@ public class CoreConstants
         ? 900.Milliseconds()
         : 400.Milliseconds();
 
-    public static string GetBaseTestPath()
+    public static string GetBaseProjectPath()
     {
         var currentDirectory = Directory.GetCurrentDirectory();
 
