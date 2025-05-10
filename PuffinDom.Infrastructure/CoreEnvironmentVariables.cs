@@ -9,9 +9,9 @@ namespace PuffinDom.Infrastructure;
 
 public class CoreEnvironmentVariables
 {
-    private static readonly AsyncLocal<RunningConfig> _currentConfig = new();
+    private static readonly AsyncLocal<RunningConfig> CurrentConfig = new();
 
-    public static RunningConfig RunningConfig => _currentConfig.Value ?? (_currentConfig.Value = ThreadSafeRunningConfig.Instance.Pop());
+    public static RunningConfig RunningConfig => CurrentConfig.Value ?? (CurrentConfig.Value = ThreadSafeRunningConfig.Instance.Pop());
 
     public static Uri DriverUri => new($"http://localhost:{RunningConfig.AppiumPort}/wd/hub");
 
@@ -52,12 +52,10 @@ public class CoreEnvironmentVariables
 
         using var logContext = Log.PushContext("Environment variables");
 
-        Log.Write($"{nameof(EnableEachStepScreenshots)}: {EnableEachStepScreenshots}");
         Log.Write($"{nameof(RunDroid)}: {RunDroid}");
         Log.Write($"{nameof(RunIOS)}: {RunIOS}");
         Log.Write($"{nameof(Device)}: {Device}");
         Log.Write($"{nameof(DroidEmulatorId)}: {DroidEmulatorId}");
-        Log.Write($"{nameof(IsGoogleServicesEnabled)}: {IsGoogleServicesEnabled}");
 
         if (!RunDroid && !RunIOS)
             throw new Exception("No emulators to run tests on were specified. Please check .env file.");
@@ -77,24 +75,5 @@ public class CoreEnvironmentVariables
         public const string DroidEmulatorId = "DROID_EMULATOR_ID";
         public const string LatestAppStartTime = "LATEST_APP_START_TIME";
         public const string PackageId = "PACKAGE_ID";
-
-        // Helper method to get all environment variable names
-        public static string[] GetAllNames()
-        {
-            return new[]
-            {
-                EnableLocalScreenshots,
-                InstallAppFromPath,
-                DotNetTestFilter,
-                Device,
-                GoogleServices,
-                DroidBuildFtpPAth,
-                NoNewUsersCreation,
-                AppIsPreinstalled,
-                DroidEmulatorId,
-                LatestAppStartTime,
-                PackageId,
-            };
-        }
     }
 }
