@@ -9,6 +9,7 @@ using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Appium.Service.Options;
 using PuffinDom.Infrastructure;
 using PuffinDom.Infrastructure.Appium.Helpers;
+using PuffinDom.Infrastructure.Helpers;
 
 namespace PuffinDom.Infrastructure.Appium.Helpers;
 
@@ -44,7 +45,7 @@ public class AppiumServerWrapper : IAppiumServerWrapper
 
                 var serverService = new AppiumServiceBuilder()
                     .WithArguments(arguments)
-                    .UsingPort(CoreConstants.AppiumPort)
+                    .UsingPort(CoreEnvironmentVariables.RunningConfig.AppiumPort)
                     .WithStartUpTimeOut(CoreConstants.AppiumServerStartUpTimeOut)
                     .WithLogFile(new FileInfo(CoreConstants.AppiumLogFileName))
                     .Build();
@@ -103,8 +104,10 @@ public class AppiumServerWrapper : IAppiumServerWrapper
         {
             using var httpClient = new HttpClient();
 
+            var appiumUri = $"{CoreEnvironmentVariables.RunningConfig.AppiumUrl}:{CoreEnvironmentVariables.RunningConfig.AppiumPort}/wd/hub/sessions";
+            
             var serverRunning = httpClient
-                .GetAsync("http://127.0.0.1:4723/wd/hub/sessions")
+                .GetAsync(appiumUri)
                 .Result
                 .IsSuccessStatusCode;
 

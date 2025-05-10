@@ -1,10 +1,11 @@
+using System.Reflection;
 using PuffinDom.Tools.Extensions;
+using PuffinDom.Tools.Logging;
 
 namespace PuffinDom.Infrastructure;
 
 public class CoreConstants
 {
-    public const string RelativePathToRootDirectory = "../..";
     public const string IOSScreenshotsFolderName = "IOSScreenshots";
 
     public const string ValidationPassed = "VALIDATION PASSED | ";
@@ -17,14 +18,15 @@ public class CoreConstants
 
     public const string AndroidBrowserBundleId = "com.android.chrome";
     public const string AndroidChromiumBrowserBundleId = "org.chromium.webview_shell";
+
     public const string Android21BrowserBundleId = "com.android.browser";
-    public const int AppiumPort = 4723;
+
     public const string AppiumLogFileName = "appium.log";
 
     public const int MinimumDpToScrollUpOrDown = 30;
 
     public static readonly string RelativePathToTestDataDirectory =
-        Path.Combine(RelativePathToRootDirectory, "TestData");
+        Path.Combine(GetBaseTestPath(), "TestData");
 
     public static readonly TimeSpan ViewWaitingTimeout = 9.Seconds();
     public static readonly TimeSpan ViewDisappearingTimeout = 6.Seconds();
@@ -48,8 +50,6 @@ public class CoreConstants
 
     public static readonly List<string> PingUrls = ["8.8.8.8"];
 
-    public static Uri DriverUri => new($"http://localhost:{AppiumPort}/wd/hub");
-
     public static TimeSpan WaitForAppIdleBeforeAppiumActionStartTimeout
         => CoreEnvironmentVariables.RunDroid
             ? 200.Millisecond()
@@ -66,4 +66,17 @@ public class CoreConstants
     public static TimeSpan DelayAfterSwipeDuration => CoreEnvironmentVariables.RunDroid
         ? 900.Milliseconds()
         : 400.Milliseconds();
+
+    public static string GetBaseTestPath()
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+
+        var baseProjectPath = Path.GetDirectoryName(currentDirectory.Split([$"/bin"], StringSplitOptions.None)[0]).NotNull();
+#if !DEBUG
+        baseProjectPath = Path.Combine(baseProjectPath, "..");
+#endif
+
+        Log.Write($"Base project path: {baseProjectPath}");
+        return baseProjectPath;
+    }
 }

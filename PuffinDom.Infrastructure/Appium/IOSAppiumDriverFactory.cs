@@ -17,7 +17,7 @@ public class IOSAppiumDriverFactory
     public static IOSDriver Create(bool startApp = true)
     {
         var driverOptions = GetOptions(startApp);
-        return new IOSDriver(CoreConstants.DriverUri, driverOptions);
+        return new IOSDriver(CoreEnvironmentVariables.DriverUri, driverOptions);
     }
 
     private static AppiumOptions GetOptions(bool startApp = true)

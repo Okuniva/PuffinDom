@@ -12,7 +12,7 @@ public class DroidAppiumDriverFactory
     {
         using var logContext = Log.PushContext("Appium android driver starting");
 
-        var driver = new AndroidDriver(CoreConstants.DriverUri, GetOptions());
+        var driver = new AndroidDriver(CoreEnvironmentVariables.DriverUri, GetOptions());
 
         driver.ConfiguratorSetWaitForIdleTimeout(
             (int)CoreConstants.WaitForAppIdleBeforeAppiumActionStartTimeout.TotalMilliseconds);

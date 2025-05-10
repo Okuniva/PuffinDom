@@ -1,13 +1,22 @@
 using System.Diagnostics.CodeAnalysis;
 using dotenv.net;
 using dotenv.net.Utilities;
+using PuffinDom.Infrastructure.Helpers;
 using PuffinDom.Infrastructure.Helpers.Device;
 using PuffinDom.Tools.Logging;
 
 namespace PuffinDom.Infrastructure;
 
-public static class CoreEnvironmentVariables
+public class CoreEnvironmentVariables
 {
+    private static readonly AsyncLocal<RunningConfig> _currentConfig = new();
+
+    public static RunningConfig RunningConfig => _currentConfig.Value ?? (_currentConfig.Value = ThreadSafeRunningConfig.Instance.Pop());
+
+    public static Uri DriverUri => new($"http://localhost:{RunningConfig.AppiumPort}/wd/hub");
+
+    public static string DroidEmulatorId => RunningConfig.DeviceId;
+
     public static bool EnableEachStepScreenshots =>
         EnvReader.TryGetBooleanValue(Names.EnableLocalScreenshots, out var value)
         && value;
@@ -28,79 +37,20 @@ public static class CoreEnvironmentVariables
 
     public static bool IsGoogleServicesEnabled => EnvReader.TryGetBooleanValue(Names.GoogleServices, out var value) && value;
     public static string ScreenshotsDirectory => Device == Emulator.AndroidTablet21 ? "/data/local/tmp/" : "/sdcard/";
-    public static bool AppIsPreinstalled => EnvReader.TryGetBooleanValue(Names.AppIsPreinstalled, out var value) && value;
-    public static string DroidEmulatorId => EnvReader.TryGetStringValue(Names.DroidEmulatorId, out var value) ? value : string.Empty;
-    public static string PackageId => EnvReader.TryGetStringValue(Names.PackageId, out var value) ? value : string.Empty;
 
-    public static string? LoadedEnvFilePath { get; }
+    public static bool AppIsPreinstalled => EnvReader.TryGetBooleanValue(Names.AppIsPreinstalled, out var value) && value;
+
+    // public static string DroidEmulatorId => EnvReader.TryGetStringValue(Names.DroidEmulatorId, out var value) ? value : string.Empty;
+    public static string PackageId => EnvReader.TryGetStringValue(Names.PackageId, out var value) ? value : string.Empty;
 
     public static void ReloadEnvironmentVariables(bool log = true)
     {
-        using var logContext = log ? Log.PushContext("Environment variables") : null;
-
-        // Log the current directory and potential .env file locations
-        var currentDir = Directory.GetCurrentDirectory();
-        Log.Write($"Current directory: {currentDir}");
-
-        // Track environment variables before loading to detect changes
-        var beforeVars = new Dictionary<string, string>();
-        foreach (var key in Names.GetAllNames())
-            beforeVars[key] = Environment.GetEnvironmentVariable(key) ?? string.Empty;
-
-        // Get potential paths that might be searched
-        var searchPaths = new List<string> { currentDir };
-        var dirInfo = new DirectoryInfo(currentDir);
-        for (var i = 0; i < 4; i++) // probeLevelsToSearch: 4
-        {
-            dirInfo = dirInfo?.Parent;
-            if (dirInfo == null)
-                break;
-
-            searchPaths.Add(dirInfo.FullName);
-        }
-
-        Log.Write($"Potential .env search paths:\n  {string.Join("\n  ", searchPaths)}");
-
-        // Load environment variables
-        DotEnv.Load(new DotEnvOptions(probeLevelsToSearch: 4, probeForEnv: true));
-
-        // Detect which variables were changed to determine which .env file was loaded
-        var changedVars = new List<string>();
-        foreach (var key in Names.GetAllNames())
-        {
-            var afterValue = Environment.GetEnvironmentVariable(key) ?? string.Empty;
-            if (beforeVars[key] != afterValue)
-                changedVars.Add(key);
-        }
-
-        if (changedVars.Count > 0)
-        {
-            Log.Write($"Loaded environment variables: {string.Join(", ", changedVars)}");
-
-            // Try to determine which .env file was loaded by checking if files exist
-            foreach (var path in searchPaths)
-            {
-                var envFile = Path.Combine(path, ".env");
-                if (File.Exists(envFile))
-                {
-                    Log.Write($"Found .env file at: {envFile}");
-
-                    // If environment-specific .env files should be checked (probeForEnv: true)
-                    var envName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ??
-                                  Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
-                                  "Development";
-
-                    var envSpecificFile = Path.Combine(path, $".env.{envName}");
-                    if (File.Exists(envSpecificFile))
-                        Log.Write($"Found environment-specific .env file at: {envSpecificFile}");
-                }
-            }
-        }
-        else
-            Log.Write("No environment variables were loaded from .env files");
+        DotEnv.Load(new DotEnvOptions(probeLevelsToSearch: 6, probeForEnv: true));
 
         if (!log)
             return;
+
+        using var logContext = Log.PushContext("Environment variables");
 
         Log.Write($"{nameof(EnableEachStepScreenshots)}: {EnableEachStepScreenshots}");
         Log.Write($"{nameof(RunDroid)}: {RunDroid}");
