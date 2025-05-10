@@ -197,7 +197,7 @@ public class TextInput : ViewWithPlaceholder<TextInput>
 
         DeviceEnterText(text);
 
-        _dismissKeyboard.Dismiss(keyboardDismiss);
+        // _dismissKeyboard.Dismiss(keyboardDismiss);
 
         if (assertText)
             AssertEnteredText(expectedText ?? text, expectPlaceholder);
@@ -236,6 +236,12 @@ public class TextInput : ViewWithPlaceholder<TextInput>
             case Platform.Android when UIContext.AndroidTablet21 && Placeholder != string.Empty:
                 this.AssertTextContains(
                     expectedText,
+                    $"Text is not equal to entered text in {this}");
+
+                break;
+            case Platform.Android when _inputType == TextInputType.Password:
+                this.AssertTextBecomesEqualTo(
+                    string.Concat(Enumerable.Repeat('•', expectedText.Length)),
                     $"Text is not equal to entered text in {this}");
 
                 break;
