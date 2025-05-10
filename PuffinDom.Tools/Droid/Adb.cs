@@ -487,6 +487,7 @@ public class Adb
             .Replace(" ", "\\ ")
             .Replace("!", "\\!")
             .Replace("@", "\\@")
+            .Replace("$", "\\$")
             .Replace("#", "\\#")
             .Replace("'", "\\'")
             .Replace("\"", "\\\"")

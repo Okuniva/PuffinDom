@@ -1,4 +1,5 @@
 using PuffinDom.Tools.ExternalApplicationsTools;
+using PuffinDom.Tools.Extensions;
 
 namespace PuffinDom.Tools.Droid;
 
@@ -9,6 +10,7 @@ public class SDKManager
         ExternalProgramRunner.Run(
             "sdkmanager",
             $"\"{package}\"",
+            timeout: 30.Minutes(),
             message: $"Installing package {package}");
     }
 }
