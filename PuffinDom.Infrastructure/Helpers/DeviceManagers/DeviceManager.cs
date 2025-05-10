@@ -260,7 +260,7 @@ public partial class DeviceManager : IDeviceManager, IDisposable
         return this;
     }
 
-    public void TakeScreenshotAndSaveLocally()
+    public DeviceManager TakeScreenshotAndSaveLocally()
     {
         switch (Platform)
         {
@@ -272,6 +272,8 @@ public partial class DeviceManager : IDeviceManager, IDisposable
                 XCodeCommandLine.TakeScreenshot(IOSDeviceName, CoreConstants.IOSScreenshotsFolderName);
                 break;
         }
+
+        return this;
     }
 
     
