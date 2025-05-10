@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <ResultsDirectory>TestsResults</ResultsDirectory>
+    <TestSessionTimeout>46800000</TestSessionTimeout>
+    <TreatNoTestsAsError>true</TreatNoTestsAsError>
+  </RunConfiguration>
+
+  <NUnit>
+    <DisplayName>FullNameSep</DisplayName>
+    <NumberOfTestWorkers>1</NumberOfTestWorkers>
+  </NUnit>
+
+  <LoggerRunSettings>
+    <Loggers>
+      <Logger friendlyName="console" enabled="True">
+        <Configuration>
+          <Verbosity>normal</Verbosity>
+        </Configuration>
+      </Logger>
+      <Logger friendlyName="nunit" enabled="True">
+        <Configuration>
+          <LogFileName>NUnit Results.xml</LogFileName>
+        </Configuration>
+      </Logger>
+    </Loggers>
+  </LoggerRunSettings>
+
+</RunSettings>
