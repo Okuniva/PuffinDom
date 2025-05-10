@@ -206,9 +206,14 @@ public static class XPathStringExtensions
         }
     }
 
-    public static string Id(this string query, string id)
+    public static string PackageId(this string query, string id)
     {
         return $"{query}//*[{PlainId(id)}]";
+    }
+
+    public static string Id(this string query, string id)
+    {
+        return $"{query}//*[{PlainId(id, "")}]";
     }
 
     public static string IdOrAlternativeIds(this string query, string id, params string[] alternativeIds)
@@ -264,6 +269,11 @@ public static class XPathStringExtensions
     }
 
     public static string IdAndText(this string query, string id, string text)
+    {
+        return $"{query}//*[{PlainId(id, "")} and {PlainText(text)}]";
+    }
+
+    public static string PackageIdAndText(this string query, string id, string text)
     {
         return $"{query}//*[{PlainId(id)} and {PlainText(text)}]";
     }
