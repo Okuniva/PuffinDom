@@ -1,4 +1,5 @@
 using Bitwarden.Helpers.Extensions;
+using Bitwarden.Models.Enums;
 using PuffinDom.UI.Enums;
 using PuffinDom.UI.Extensions;
 using PuffinDom.UI.Views;
@@ -24,9 +25,9 @@ public class VerifyMasterPasswordPage: ScreenView<VerifyMasterPasswordPage>
         this,
         x => x.Text("Your vault is locked. Verify your master password to continue."));
     
-    public View UserAndEnvironmentDataLabel(string email, string host) => new(
+    public View UserAndEnvironmentDataLabel(string email, Host host) => new(
         this,
-        x => x.Text($"Logged in as {email} on {host}."));
+        x => x.Text($"Logged in as {email} on {host.CovertToString()}."));
     
     public View UnlockButton => new(
         this,

@@ -1,3 +1,4 @@
+using Bitwarden.Models.Enums;
 using PuffinDom.UI.Enums;
 using PuffinDom.UI.Extensions;
 using PuffinDom.UI.Views;
@@ -12,18 +13,24 @@ public class LoggingInOnDialog : DialogView<LoggingInOnDialog>
             DialogButtonsCountFlags.One,
             x => x.Dialog(
                 "Logging in on",
-                "bitwarden.com",
-                "bitwarden.eu",
-                "Self-hosted"
+                Host.BitwardenCom.CovertToString(),
+                Host.BitwardenEu.CovertToString(),
+                Host.SelfHosted.CovertToString()
             ))
     {
     }
 
-    public ListView<CheckBox> HostsList => new(
+    public ListView<View> HostsList => new(
         this,
         x => x.Id("AlertRadioButtonOption"),
         x => x.Id("AlertRadioButtonOptionName")
     );
+
+    public void SelectHost(Host host)
+    {
+        HostsList.First(view => view.Text.Equals(host.CovertToString()))
+            .Tap(screenClosed:true);
+    }
 
     public View Cansel => new(
         this,

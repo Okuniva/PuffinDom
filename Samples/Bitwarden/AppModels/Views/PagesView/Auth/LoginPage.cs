@@ -15,7 +15,7 @@ public class LoginPage : ScreenView<LoginPage>
         "Email address",
         x => x.Id("EmailAddressEntry"));
 
-    public View RegionSelectorDropdown => new(
+    public View HostSelectorDropdown => new(
         this,
         x => x.Id("RegionSelectorDropdown"));
 

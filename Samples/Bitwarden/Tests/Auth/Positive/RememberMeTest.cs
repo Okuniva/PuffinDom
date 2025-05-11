@@ -3,6 +3,7 @@ using Bitwarden.AppModels.Views;
 using Bitwarden.Helpers.Attributes;
 using Bitwarden.Helpers.Extensions;
 using Bitwarden.Models;
+using Bitwarden.Models.Enums;
 using Bitwarden.TestLifecycle;
 using NUnit.Framework;
 using PuffinDom.Infrastructure.Helpers;

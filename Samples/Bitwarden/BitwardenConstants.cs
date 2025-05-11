@@ -1,4 +1,5 @@
 using System.Xml;
+using Bitwarden.Models.Enums;
 using PuffinDom.Infrastructure;
 
 namespace Bitwarden;
@@ -15,7 +16,7 @@ public class BitwardenConstants
     public const string ProductName = "bitwarden";
     public const string AppCrashed = "App crashed";
     public const string BundleId = "com.x8bit.bitwarden";
-    public const string DefaultHost = "bitwarden.com";
+    public const Host DefaultHost = Host.BitwardenCom;
 
     public const string GmsModuleWasUpdatedOnAndroidSoTheAppWasClosed =
         "com.google.android.gms was updated and OS closed the app";
