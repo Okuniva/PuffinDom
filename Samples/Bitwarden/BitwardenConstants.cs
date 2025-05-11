@@ -33,6 +33,7 @@ public class BitwardenConstants
 
     public static string BitwardenSamplesPath => Path.Combine(
         CoreConstants.GetBaseProjectPath());
+
     public static string BitwardenTestArtefactsPath => Path.Combine($"{BitwardenSamplesPath}", TestArtefacts);
 
     public static string RelativePathToResultsFolder
@@ -42,8 +43,8 @@ public class BitwardenConstants
             var xmlDocumentAfterRunningTests = new XmlDocument();
             xmlDocumentAfterRunningTests.Load(
                 Path.Combine(
-                    BitwardenSamplesPath, 
-                    TestArtefacts, 
+                    BitwardenSamplesPath,
+                    TestArtefacts,
                     UITestsRunSettingsFilename));
             var folderOfTestsResultsXml =
                 xmlDocumentAfterRunningTests.SelectSingleNode("//RunSettings/RunConfiguration/ResultsDirectory")!
@@ -52,6 +53,4 @@ public class BitwardenConstants
             return Path.Combine($"{BitwardenTestArtefactsPath}", folderOfTestsResultsXml);
         }
     }
-    
-        
 }

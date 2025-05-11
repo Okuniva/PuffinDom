@@ -6,9 +6,10 @@ using PuffinDom.UI.Views;
 
 namespace Bitwarden.AppModels.Views.PagesView.Auth.Password;
 
-public class VerifyMasterPasswordHeader: View<VerifyMasterPasswordHeader>
+public class VerifyMasterPasswordHeader : View<VerifyMasterPasswordHeader>
 {
-    public VerifyMasterPasswordHeader(VerifyMasterPasswordPage parent, bool wait = true, [CallerMemberName] string viewName = "")
+    public VerifyMasterPasswordHeader(VerifyMasterPasswordPage parent, bool wait = true,
+        [CallerMemberName] string viewName = "")
         : base(
             parent,
             x => x.ScreenWithTitle("Verify master password"),

@@ -34,7 +34,7 @@ public class InvalidCredentialTest : UITestFixtureBase
 
         Dialogs.InvalidCredentialError.Ok.Tap(screenClosed: true);
     }
-    
+
     [UITest("ToDo", RunOn.AndroidOnly_iOSInDevelopment)]
     public void TryLoginWithInvalidPassword()
     {

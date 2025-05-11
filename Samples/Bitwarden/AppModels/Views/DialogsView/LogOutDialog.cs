@@ -4,7 +4,7 @@ using PuffinDom.UI.Views;
 
 namespace Bitwarden.AppModels.Views.DialogsView;
 
-public class LogOutDialog: DialogView<LogOutDialog>
+public class LogOutDialog : DialogView<LogOutDialog>
 {
     public LogOutDialog()
         : base(

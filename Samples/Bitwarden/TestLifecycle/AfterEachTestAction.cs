@@ -61,6 +61,7 @@ public class AfterEachTestAction
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed || postException != null)
                 SaveResults(postException);
         }
+
         return true;
     }
 

@@ -17,7 +17,7 @@ namespace Bitwarden.Tests.Auth.Positive;
 [Parallelizable]
 public class RememberMeTest : UITestFixtureBase
 {
-    private readonly User _user = 
+    private readonly User _user =
         new("biveyin321@bamsrad.com", "M@sterP$$w0rd", "DI");
 
     public override void BeforeEachTest()

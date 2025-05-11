@@ -33,7 +33,7 @@ public class LoginWithoutInternetTest : UITestFixtureBase
         }
 
         Dialogs.Error.Ok.Tap(screenClosed: true);
-        
+
         UIContext.Device.TurnOnInternet();
         Pages.MasterPassword.LogInWithMasterPasswordButton.Tap(screenClosed: true);
         Pages.Vault.Wait();

@@ -29,7 +29,7 @@ public class LoggingInOnDialog : DialogView<LoggingInOnDialog>
     public void SelectHost(Host host)
     {
         HostsList.First(view => view.Text.Equals(host.CovertToString()))
-            .Tap(screenClosed:true);
+            .Tap(screenClosed: true);
     }
 
     public View Cansel => new(

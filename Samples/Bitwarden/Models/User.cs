@@ -11,8 +11,8 @@ public record User
 
     public User(
         string email,
-        string password, 
-        string avatarIconInitials, 
+        string password,
+        string avatarIconInitials,
         Host host = BitwardenConstants.DefaultHost)
     {
         Email = email;

@@ -4,7 +4,7 @@ using PuffinDom.UI.Views;
 
 namespace Bitwarden.AppModels.Views.DialogsView;
 
-public class ErrorDialog: DialogView<ErrorDialog>
+public class ErrorDialog : DialogView<ErrorDialog>
 {
     public ErrorDialog()
         : base(
