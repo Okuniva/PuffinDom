@@ -23,6 +23,16 @@ public class StartBitwardenApplicationAction
                 UIContext.Device.StartAppiumClientDriver();
                 break;
         }
+
+        SkipWelcomePage();
+    }
+
+    private static void SkipWelcomePage()
+    {
+        if (Pages.Welcome.WaitSucceeded(timeOut: 2.Seconds()))
+        {
+            Pages.Welcome.ChooseLoginButton.Tap(screenClosed: true);
+        }
     }
 
     private static void StartAppOnAndroid()
